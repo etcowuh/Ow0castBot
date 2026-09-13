@@ -1,0 +1,23 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv/
+
+# creds
+user-password.cfg
+pywikibot-*.lwp
+
+# library junk
+apicache/
+
+# page lists for testing/trials of tasks
+pages_*.txt
+
+# logs
+logs/
