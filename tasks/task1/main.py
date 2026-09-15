@@ -109,6 +109,9 @@ class Task1(BaseTask):
                 is_in_wikilink = any(link is wl_link for wl_link in self.links_in_wikilinks)
 
                 new = ""
+                if page.lower().startswith("file"):
+                    self._log_state(f"Skipping {link.url} because it is a File link")
+                    continue
                 if is_in_wikilink:
                     if lang == self.site.lang:
                         new = f"{page}{rest}"
