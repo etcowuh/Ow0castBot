@@ -36,7 +36,7 @@ class Task1(BaseTask):
 
     def can_edit(self, page):
         user = "Ow0castBot"
-        text = mwparserfromhell.parse(page.text)
+        text = mwparserfromhell.parse(page)
         for tl in text.filter_templates():
             if tl.name.matches(['bots', 'nobots']):
                 break
