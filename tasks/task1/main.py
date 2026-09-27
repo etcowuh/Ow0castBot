@@ -176,24 +176,6 @@ class Task1(BaseTask):
                 self._log_state("Nothing to do.")
                 self._log_state("")
             else:
-                diff = difflib.ndiff(
-                    currentPage.text.split("\n"),
-                    str(wikicode).split("\n")
-                )
-                for line in diff:
-                    if line.startswith('+ '):
-                        print(Fore.GREEN + line + Fore.RESET)
-                    elif line.startswith('- '):
-                        print(Fore.RED + line + Fore.RESET)
-                    elif line.startswith('? '):
-                        print(Fore.BLUE + line + Fore.RESET)
-                    else:
-                        print(line)
-                if input("OK? (y/n) ") == "y":
-                    currentPage.text = wikicode
-                    currentPage.save(f"supervised while on trial | {self.description} | [[Wikipedia:Bots/Requests_for_approval/Ow0castBot|BRFA]]")
-                    self._log_state("")
-                else:
-                    self._log_state("Not saving.")
-                    self._log_state("")
-        # self.logger.info("Task 1 completed")
+                currentPage.text = wikicode
+                currentPage.save(f"{self.description} | Broke something? [[User talk:Ow0cast|Let me know!]]")
+                self._log_state("")
