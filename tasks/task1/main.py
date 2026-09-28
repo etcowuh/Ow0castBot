@@ -4,6 +4,7 @@ from tasks.task1.special_templates import SKIP, TREAT_SPECIAL, CITATIONS
 
 import mwparserfromhell
 from pywikibot import pagegenerators
+from pywikibot.exceptions import LockedPageError
 import pywikibot
 import re
 from urllib.parse import unquote, urlparse
@@ -112,11 +113,14 @@ class Task1(BaseTask):
                 if page.lower().startswith("file"):
                     self._log_state(f"Skipping {link.url} because it is a File link")
                     continue
+                if page.lower().startswith("category"):
+                    self._log_state(f"Skipping {link.url} because it is a Category link")
+                    continue
                 if is_in_wikilink:
                     if lang == self.site.lang:
                         new = f"{page}{rest}"
                     else:
-                        new = f"{lang}:{page}{rest}"
+                        new = f":{lang}:{page}{rest}"
                 else:
                     if lang == self.site.lang:
                         if title:
@@ -125,9 +129,9 @@ class Task1(BaseTask):
                             new = f"[[{page}]]{rest}"
                     else:
                         if title:
-                            new = f"[[{lang}:{page}|{title}]]{rest}"
+                            new = f"[[:{lang}:{page}|{title}]]{rest}"
                         else:
-                            new = f"[[{lang}:{page}]]{rest}"
+                            new = f"[[:{lang}:{page}]]{rest}"
                     ensureProperNamednessArray = mwparserfromhell.parse(new).filter_wikilinks(False)
                     if len(ensureProperNamednessArray) != 1:
                         new = str(ensureProperNamednessArray[-1]) + rest
@@ -177,5 +181,8 @@ class Task1(BaseTask):
                 self._log_state("")
             else:
                 currentPage.text = wikicode
-                currentPage.save(f"{self.description} | Broke something? [[User talk:Ow0cast|Let me know!]]")
+                try:
+                    currentPage.save(f"{self.description} | Broke something? [[User talk:Ow0cast|Let me know!]]")
+                except LockedPageError:
+                    self._log_state("Page is protected")
                 self._log_state("")
