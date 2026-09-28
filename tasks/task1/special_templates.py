@@ -22,7 +22,9 @@ SKIP = [
     "url",
     "coloredlink",
     "colored link",
-    "free-content attribution"
+    "free-content attribution",
+    "creative commons text attribution notice",
+    "cc-notice"
 ]
 
 CITATIONS = [
