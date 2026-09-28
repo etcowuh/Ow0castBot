@@ -133,9 +133,10 @@ class Task1(BaseTask):
                         else:
                             new = f"[[:{lang}:{page}]]{rest}"
                     ensureProperNamednessArray = mwparserfromhell.parse(new).filter_wikilinks(False)
-                    if len(ensureProperNamednessArray) != 1:
+                    if len(ensureProperNamednessArray) >= 2:
                         new = str(ensureProperNamednessArray[-1]) + rest
-                            
+                    if new.endswith('}}]]'):
+                        new = new.replace('}}]]', ']]')
                     try:
                         idx = wikicode.index(link)
                         if idx > 0 and idx < len(wikicode.nodes) - 1:
@@ -147,7 +148,7 @@ class Task1(BaseTask):
                                     next_node.value = next_node.value[1:]
                     except ValueError:
                         pass
-                        
+                self._log_state(f"Replaced {link.url} with {str(new).replace("_", " ")}")
                 wikicode.replace(link, str(new).replace("_", " "))
         return wikicode
 
