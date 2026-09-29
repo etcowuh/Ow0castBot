@@ -1,16 +1,17 @@
 from tasks.BaseTask import BaseTask
-
 from tasks.task1.special_templates import SKIP, TREAT_SPECIAL, CITATIONS
 
+import difflib
 import mwparserfromhell
-from pywikibot import pagegenerators
-from pywikibot.exceptions import LockedPageError
 import pywikibot
 import re
-from urllib.parse import unquote, urlparse
-import difflib
+
 from colorama import Fore, Style, init
 from datetime import datetime, timezone, timedelta
+from pywikibot import pagegenerators
+from pywikibot.exceptions import LockedPageError
+from urllib.parse import unquote, urlparse
+
 class Task1(BaseTask):
     def __init__(self):
         super().__init__(1, "Replace plain links to wikipedia with wikilinks")
