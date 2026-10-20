@@ -34,13 +34,14 @@ class BaseTask:
         self._logger.log(level, message)
 
     def _log_state(self, message):
-        if self.state == 0:
-            self._logger.log("PRE EDIT", message)
-        elif self.state == 1:
-            self._logger.log("PRE-PASS", message)
-        elif self.state == 2:
-            self._logger.log("PROCESS", message)
-        elif self.state == 3:
-            self._logger.log("POST-PASS", message)
-        elif self.state == 4:
-            self._logger.log("PRE SAVE", message)
+        pass
+        # if self.state == 0:
+        #     self._logger.log("PRE EDIT", message)
+        # elif self.state == 1:
+        #     self._logger.log("PRE-PASS", message)
+        # elif self.state == 2:
+        #     self._logger.log("PROCESS", message)
+        # elif self.state == 3:
+        #     self._logger.log("POST-PASS", message)
+        # elif self.state == 4:
+        #     self._logger.log("PRE SAVE", message)
