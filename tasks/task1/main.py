@@ -108,6 +108,13 @@ class Task1(BaseTask):
                 page = clean.split("/wiki/")[1].split("#:~:")[0]
                 lang = clean.split("://")[1].split(".")[0]
 
+                match lang:
+                    case "ten":
+                        lang = "tenwiki"
+                    case "test":
+                        lang = "testwiki"
+                    case "test2":
+                        lang = "test2wiki"
                 is_in_wikilink = any(link is wl_link for wl_link in self.links_in_wikilinks)
 
                 new = ""
@@ -161,7 +168,7 @@ class Task1(BaseTask):
     def run(self, site: pywikibot.Site):
         self.site = site
         self.user = pywikibot.User(site, "Ow0castBot")
-        generator = pywikibot.pagegenerators.TextIOPageGenerator("pages_task1.txt")
+        generator = pywikibot.pagegenerators.RecentChangesPageGenerator()
         for currentPage in generator:
             self.state = 0
             self._log_state(f"On [[{currentPage.title()}]]:")
@@ -171,6 +178,10 @@ class Task1(BaseTask):
                 continue
             if self._is_too_soon(currentPage):
                 self._log_state("Too soon to edit this page again")
+                self._log_state("")
+                continue
+            if not currentPage.namespace() == 0:
+                self._log_state("Not in Mainspace")
                 self._log_state("")
                 continue
             wikicode = mwparserfromhell.parse(currentPage.text)
